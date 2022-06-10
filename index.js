@@ -102,6 +102,19 @@ const signImage = (_sig) => {
 
 }
 
+const genColor = () => {
+    let hue = Math.floor(Math.random() * 360);
+    let pastel = `hsl(${hue}, 100%, 85%)`;
+    return pastel;
+
+};
+
+const drawBackground = () => {
+    ctx.fillStyle = genColor();
+    ctx.fillRect(0, 0, width, height);
+};
+
+
 const writeMetadata = (_data) => {
     fs.writeFileSync(`./output/metadata.json`, _data);
 }
@@ -124,6 +137,7 @@ const startCreating = async () => {
             });
 
             await Promise.all(loadedElements).then(elementsArray => {
+                drawBackground();
                 elementsArray.forEach( element => {
                     drawElement(element)
             });
