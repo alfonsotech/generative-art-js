@@ -11,14 +11,6 @@ let metadataList = [];
 let attributesList = [];
 let dnaList = [];
 
-
-// const drawLayer = () => {
-//     loadImage('./images/start.png').then((image) => {
-//         console.log('image', image);
-//         ctx.drawImage(image, 0, 0);
-//     });
-// }
-
 const addMetadata = (_dna, _edition) => { 
     let dateTime = Date.now();
     let tempMetadata = { 
@@ -101,6 +93,15 @@ const saveImage = (_edition) => {
     fs.writeFileSync(`./output/${_edition}.png`, canvas.toBuffer('image/png'));
 }
 
+const signImage = (_sig) => {
+    ctx.fillStyle = '#EE4B2B';
+    ctx.font = 'bold 50px Arial';
+    ctx.textBaseLine = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(_sig, 40, 40);
+
+}
+
 const writeMetadata = (_data) => {
     fs.writeFileSync(`./output/metadata.json`, _data);
 }
@@ -126,12 +127,12 @@ const startCreating = async () => {
                 elementsArray.forEach( element => {
                     drawElement(element)
             });
-
+            signImage(`#${editionCounter}`);
             saveImage(editionCounter);
             addMetadata(newDna, editionCounter);
             console.log(`created edition: ${editionCounter} with DNA:${newDna}`);
             });
-
+            
             dnaList.push(newDna); 
             editionCounter++;  
           
